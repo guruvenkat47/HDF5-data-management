@@ -18,7 +18,16 @@ class HDF5:
     '''This is a class for creating HDF5 files'''
     
     def f_creation(self, HDF5fname, grpname, struct_name, dfname, averages, Vpp):
-        
+        ''' 
+            This is a function to create an HDF5 file.
+            The data is organized into groups which in
+            my case corresponds to a particular type of
+            measurement (over here this are MOKE MH loops).
+            
+            Other groups should be created for other types of
+            measurement data for this sample.
+            
+        '''
         with h5.File(HDF5fname, 'w') as f:
     
             g = f.create_group(grpname)
@@ -40,7 +49,13 @@ class HDF5:
                 dsquare.attrs['Vpp'] = Vpp
             
     def f_readout(self, HDF5fname, grpname, struct_name, query):
+        '''
+            This is a function to read in an HDF5 file for
+            processing data. Note that (especially if the data
+            is large), then data processing may need to be done
+            with the HDF5 file open
         
+        '''
         with h5.File(HDF5fname, 'r') as f:
     
             if query == 'data':
